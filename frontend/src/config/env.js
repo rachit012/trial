@@ -1,13 +1,17 @@
 // Environment configuration
+const apiUrl =
+  import.meta.env.VITE_API_URL ||
+  (import.meta.env.PROD ? `${window.location.origin}/api` : 'http://localhost:5000/api');
+
+const socketUrl =
+  import.meta.env.VITE_SOCKET_URL ||
+  (import.meta.env.PROD ? window.location.origin : 'http://localhost:5000');
+
 const config = {
-  // API URL - can be overridden by environment variables
-  API_URL: import.meta.env.REACT_APP_API_URL || 'http://localhost:5000/api',
-  
-  // Development mode
+  API_URL: apiUrl,
+  SOCKET_URL: socketUrl,
   IS_DEV: import.meta.env.DEV || false,
-  
-  // Production mode
   IS_PROD: import.meta.env.PROD || false
 };
 
-export default config; 
+export default config;

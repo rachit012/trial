@@ -35,11 +35,8 @@ api.interceptors.response.use(
       
       try {
         // Try to refresh token
-        const { data } = await axios.post(
-          `${config.API_URL.replace('/api', '')}/auth/refresh`,
-          {},
-          { withCredentials: true }
-        );
+        const base = config.API_URL.endsWith('/api') ? config.API_URL.slice(0, -4) : config.API_URL;
+        const { data } = await axios.post(`${base}/auth/refresh`, {}, { withCredentials: true });
         
         // Store new token
         localStorage.setItem('accessToken', data.token);

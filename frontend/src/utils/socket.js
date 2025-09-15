@@ -1,11 +1,12 @@
 // src/utils/socket.js
 import { io } from 'socket.io-client';
 import api from './api';
+import config from '../config/env.js';
 
 let socketInstance = null;
 
-// Use environment variable or fallback to localhost
-const SOCKET_URL = import.meta.env.REACT_APP_SOCKET_URL || 'http://localhost:5000';
+// Use environment variable or fallback from config
+const SOCKET_URL = config.SOCKET_URL;
 
 const createSocketInstance = (token) => {
   return io(SOCKET_URL, {

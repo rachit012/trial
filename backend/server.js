@@ -28,11 +28,8 @@ const allowedOrigins = [
   'http://localhost:5000',
   'https://chit-chat-5lbam5x2b-rachit012s-projects.vercel.app',
   'https://chit-chat-6vg7jj4q1-rachit012s-projects.vercel.app',
-  'https://chit-chat-lime-three.vercel.app',
-  // Deployed frontend(s)
-  process.env.CLIENT_URL,
-  process.env.FRONTEND_URL,
-  'https://trial1-vlxq.onrender.com'
+  'https://chit-chat-lime-three.vercel.app', 
+  process.env.CLIENT_URL
 ].filter(Boolean);
 
 app.use(cors({
@@ -44,13 +41,8 @@ app.use(cors({
       return callback(new Error('Not allowed by CORS'));
     }
   },
-  credentials: true,
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization']
+  credentials: true
 }));
-
-// Explicitly handle preflight
-app.options('*', cors());
 app.use(express.json());
 
 // Configure Multer for local file storage
@@ -126,9 +118,8 @@ app.get('/uploads/:filename', (req, res) => {
 // Socket.IO setup
 const io = socketio(server, {
   cors: {
-    origin: allowedOrigins,
-    credentials: true,
-    methods: ['GET', 'POST']
+    origin: process.env.CLIENT_URL || 'http://localhost:5173',
+    credentials: true
   }
 });
 
